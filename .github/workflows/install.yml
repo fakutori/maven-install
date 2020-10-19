@@ -70,12 +70,12 @@ jobs:
         run: |
           SOURCE_PATH=src/test/java/$(echo ${{ env.GROUP_ID }} | tr . /)
           mkdir -p $SOURCE_PATH
-          cat <<- END > $SOURCE_PATH/${{ env.CLASS_NAME }}.java
+          cat <<- END > $SOURCE_PATH/${{ env.CLASS_NAME }}Test.java
           package ${{ env.GROUP_ID }};
           import static org.junit.Assert.assertTrue;
           import org.junit.Test;
 
-          public class AppTest 
+          public class ${{ env.CLASS_NAME }}Test 
           {
               @Test
               public void shouldAnswerWithTrue()
