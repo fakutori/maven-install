@@ -66,6 +66,25 @@ jobs:
           }
           END
 
+      - name: Add ${{ env.CLASS_NAME }}Test.java file
+        run: |
+          SOURCE_PATH=src/test/java/$(echo ${{ env.GROUP_ID }} | tr . /)
+          mkdir -p $SOURCE_PATH
+          cat <<- END > $SOURCE_PATH/${{ env.CLASS_NAME }}.java
+          package ${{ env.GROUP_ID }};
+          import static org.junit.Assert.assertTrue;
+          import org.junit.Test;
+
+          public class AppTest 
+          {
+              @Test
+              public void shouldAnswerWithTrue()
+              {
+                  assertTrue( true );
+              }
+          }
+          END
+
       - name: Install packages
         run: mvn install --no-transfer-progress
         env:
