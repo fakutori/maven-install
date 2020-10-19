@@ -1,4 +1,7 @@
-on: [push, repository_dispatch]
+on:
+  push:
+  watch:
+    types: [started]  
 
 env:
   GROUP_ID: com.octokat.app
