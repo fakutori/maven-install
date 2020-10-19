@@ -37,7 +37,12 @@ jobs:
                 <groupId>${{ env.TARGET_GROUP_ID }}</groupId>
                 <artifactId>${{ env.TARGET_ARTIFACT_ID }}</artifactId>
                 <version>${{ env.TARGET_VERSION }}</version>
-              </dependency>    
+              </dependency>
+              <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>[4.13.1,)</version>
+              </dependency>
             </dependencies>
             <repositories>
               <repository>
