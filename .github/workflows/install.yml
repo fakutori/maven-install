@@ -127,7 +127,7 @@ jobs:
           END
 
       - name: Install packages
-        run: mvn install --no-transfer-progress
+        run: mvn install -s settings.xml --no-transfer-progress
         env:
           GITHUB_TOKEN: ${{ github.token }}
 
