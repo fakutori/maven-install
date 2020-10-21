@@ -35,6 +35,19 @@ jobs:
             <groupId>${{ env.GROUP_ID }}</groupId>
             <artifactId>${{ env.ARTIFACT_ID }}</artifactId>
             <version>${{ env.VERSION }}</version>
+            <repositories>
+              <repository>
+                <id>central</id>
+                <url>https://repo1.maven.org/maven2</url>
+                <releases><enabled>true</enabled></releases>
+                <snapshots><enabled>true</enabled></snapshots>
+              </repository>
+              <repository>
+                <id>github</id>
+                <name>GitHub OWNER Apache Maven Packages</name>
+                <url>https://maven.pkg.github.com/${{ github.repository_owner }}/maven-publish</url>
+              </repository>
+            </repositories>
             <dependencies>
               <dependency>
                 <groupId>${{ env.TARGET_GROUP_ID }}</groupId>
@@ -48,38 +61,6 @@ jobs:
               </dependency>
             </dependencies>
           </project>
-          EOM
-
-
-      - name: Add settings.xml
-        run: |
-          cat > settings.xml << EOM
-          <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
-                                http://maven.apache.org/xsd/settings-1.0.0.xsd">
-            <activeProfiles>
-              <activeProfile>github</activeProfile>
-            </activeProfiles>
-            <profiles>
-              <profile>
-                <id>github</id>
-                <repositories>
-                  <repository>
-                    <id>central</id>
-                    <url>https://repo1.maven.org/maven2</url>
-                    <releases><enabled>true</enabled></releases>
-                    <snapshots><enabled>true</enabled></snapshots>
-                  </repository>
-                  <repository>
-                    <id>github</id>
-                    <name>GitHub OWNER Apache Maven Packages</name>
-                    <url>https://maven.pkg.github.com/${{ github.repository_owner }}/maven-publish</url>
-                  </repository>
-                </repositories>
-              </profile>
-            </profiles>
-          </settings>
           EOM
           
       - name: Add ${{ env.CLASS_NAME }}.java file
@@ -120,7 +101,7 @@ jobs:
           END
 
       - name: Install packages
-        run: mvn install -s settings.xml --no-transfer-progress
+        run: mvn install --no-transfer-progress
         env:
           GITHUB_TOKEN: ${{ github.token }}
 
